@@ -1,0 +1,44 @@
+{
+  "name": "boilerplate-typescript-package",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "homepage": "https://github.com/jessety/boilerplate-typescript-package#readme",
+  "bugs": {
+    "url": "https://github.com/jessety/boilerplate-typescript-package/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessety/boilerplate-typescript-package.git"
+  },
+  "license": "MIT",
+  "author": "Jesse Youngblood",
+  "type": "commonjs",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "example": "example",
+    "test": "test"
+  },
+  "files": [
+    "/lib"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . && ec",
+    "test": "tsc && jest"
+  },
+  "devDependencies": {
+    "@jessety/eslint-config": "^1.0.6",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.8",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/parser": "^4.4.1",
+    "editorconfig-checker": "^3.3.0",
+    "eslint": "^7.11.0",
+    "jest": "^26.5.3",
+    "ts-jest": "^26.4.1",
+    "typescript": "^4.0.3"
+  }
+}
