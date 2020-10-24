@@ -12,7 +12,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - run: npm ci
+      - run: npm install
       - run: npm run build
         env:
           CI: true
@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - run: npm ci
+      - run: npm install
       - run: npm run lint
         env:
           CI: true
@@ -43,7 +43,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node }}
-    - run: npm ci
+    - run: npm install
     - run: npm run test
       env:
         CI: true
