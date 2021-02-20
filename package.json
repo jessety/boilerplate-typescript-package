@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "build": "tsc",
-    "lint": "eslint . && ec",
+    "lint": "eslint . && ec .",
     "test": "tsc && jest"
   },
   "devDependencies": {
