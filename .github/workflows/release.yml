@@ -6,8 +6,7 @@ on:
       - 'v*' # Wait for push events with tags matching v*, e.g. v1.0, v20.15.10, v0.3.1
 
 jobs:
-  build:
-    name: release
+  release:
     runs-on: ubuntu-latest
     steps:
 
