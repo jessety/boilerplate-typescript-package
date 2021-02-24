@@ -7,43 +7,78 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - run: npm install
-      - run: npm run build
+      - name: Load dependancy cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm install
         env:
           CI: true
+      - name: Build
+        run: npm run build
 
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - run: npm install
-      - run: npm run lint
+      - name: Load dependancy cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm install
         env:
           CI: true
+      - name: Lint
+        run: npm run lint
 
   test:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest] # macos-latest is prohibitively expensive, use sparingly
         node: [14.x, 12.x]
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node ${{ matrix.node }}
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Setup Node ${{ matrix.node }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node }}
-    - run: npm install
-    - run: npm run test
+    - name: Identify cache directory
+      id: npm-cache-dir
+      run: |
+        echo "::set-output name=dir::$(npm config get cache)"
+    - name: Load dependancy cache
+      uses: actions/cache@v2
+      id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+      with:
+        path: ${{ steps.npm-cache-dir.outputs.dir }}
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - name: Install dependencies
+      run: npm install
       env:
         CI: true
+    - name: Run Tests
+      run: npm run test
