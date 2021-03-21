@@ -1,0 +1,66 @@
+name: publish
+
+on:
+  workflow_run:
+    workflows: ["release"]
+    types:
+      - completed
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - run: npm install
+      - run: npm run build --if-present
+
+# Comment out one of the following jobs to publish to only registry
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        run: npm install
+        env:
+          CI: true
+      - name: Build
+        run: npm run build --if-present
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # Create a repository secert named NPM_TOKEN containing an npm access token
+
+  publish-gpr:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          registry-url: https://npm.pkg.github.com/
+          always-auth: true
+      - name: Install dependencies
+        run: npm install
+        env:
+          CI: true
+      - name: Build
+        run: npm run build --if-present
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by GitHub, and requires no setup
