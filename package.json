@@ -32,11 +32,9 @@
     "test": "npm run build && jest"
   },
   "devDependencies": {
-    "@jessety/eslint-config": "^1.0.6",
+    "@jessety/eslint-config": "^2.0.1",
     "@types/jest": "^26.0.14",
     "@types/node": "^14.14.31",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
     "editorconfig-checker": "^3.3.0",
     "eslint": "^7.20.0",
     "jest": "^26.5.3",

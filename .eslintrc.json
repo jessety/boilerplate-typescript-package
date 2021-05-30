@@ -1,21 +1,12 @@
 {
+  "extends": "@jessety",
   "rules": {
     "linebreak-style": ["warn", "unix"]
   },
   "overrides": [
     {
-      "files": ["**/*.ts"],
-      "extends": [
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-        "@jessety"
-      ],
-      "parser": "@typescript-eslint/parser",
-      "plugins": ["@typescript-eslint"]
-    },
-    {
       "files": ["**/*.{js,cjs,mjs}"],
-      "extends": "@jessety"
+      "extends": "@jessety/eslint-config/javascript"
     },
     {
       "files": ["**/*.test.{ts,js,cjs,mjs}"],
