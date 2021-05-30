@@ -27,7 +27,7 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf lib",
-    "format": "eslint --fix . && sort-package-json",
+    "format": "sort-package-json && prettier --write '**/*.ts' && eslint --fix .",
     "lint": "eslint . && ec .",
     "test": "npm run build && jest"
   },
@@ -38,6 +38,7 @@
     "editorconfig-checker": "^3.3.0",
     "eslint": "^7.20.0",
     "jest": "^26.5.3",
+    "prettier": "^2.3.0",
     "rimraf": "^3.0.2",
     "sort-package-json": "^1.49.0",
     "ts-jest": "^26.5.1",
