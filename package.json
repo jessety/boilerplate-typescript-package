@@ -29,7 +29,10 @@
     "clean": "rimraf lib",
     "format": "sort-package-json && prettier --write '**/*.ts' && eslint --fix .",
     "lint": "eslint . && ec .",
-    "test": "npm run build && jest"
+    "test": "npm run build && jest",
+    "release:patch": "npm version patch && git push --follow-tags",
+    "release:minor": "npm version minor && git push --follow-tags",
+    "release:major": "npm version major && git push --follow-tags"
   },
   "devDependencies": {
     "@jessety/eslint-config": "^2.0.1",

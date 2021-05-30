@@ -6,26 +6,32 @@ Boilerplate for a TypeScript npm package
 
 ## Includes
 
-- Jest TypeScript configuration
-- ESLint rules
-- `editorconfig` rules & enforcement
+- TypeScript configuration
+- `ts-jest` setup for automated testing
+- ESLint rules & `editorconfig` for linting
+- Prettier and ESLint for deterministic code formatting
 - CI - build, lint & test
-- CD - distribute to `npm` and `gpr` on version tags
-- Automatically populate GitHub releases
+- CD - automated publishing to both [npm](https://www.npmjs.com/) and the [GitHub Package Registry](https://github.com/features/packages)
+- GitHub Releases generated with automatic changelogs populated via a configurable template
 - Dependabot configuration
 - VSCode settings
 
-## Publishing
+## Release / Publish
 
-Publishing is handled by a continuous delivery workflow within GitHub Actions. By default, new versions are dual-published to both `npm` and the GitHub Package Registry. Comment one out in the `publish` workflow to only use one. If you would like to publish to `npm`, create a `NPM_TOKEN` repository secret.
+Publishing is handled by a continuous delivery workflow within GitHub Actions. By default, new versions are dual-published to both `npm` and `gpr` (the GitHub Package Registry.) Comment one out in `.github/workflows/publish.yml` to only use one. If you would like to publish to `npm`, create a `NPM_TOKEN` repository secret. Publishing to `gpr` does not require an auth token.
 
-To publish a new release to `npm` / `gpr` / both, make sure your git repository is clean, and determine what kind of [semantic versioning](https://semver.org) bump this will require. Updates should fall into one of three categories: `major` (breaking changes) `minor` (new functionality without breaking changes) or `patch` (backwards compatible bug fixes).
+First, determine what kind of [semantic versioning](https://semver.org) bump this release will require. Updates should fall into one of three categories: `major` (new functionality with breaking changes) `minor` (new functionality without breaking changes) or `patch` (backwards compatible bug fixes).
 
-After determining the version bump type, run `npm version` followed by the release version number you would like to increment. This will increment `package.json` automatically and add a git tag for the new version. So, for example, to publish a version that adds a new a feature, run `npm version minor`. Finally, run `git push --follow-tags` to push the commit and tag created by the prior command.
+To publish a new release, checkout the make sure your git repository is clean and run one of the following commands:
 
-```sh
-npm version patch
-git push --follow-tags
-```
+- `npm run release:major` (new functionality with breaking changes)
+- `npm run release:minor` (new functionality without breaking changes)
+- `npm run release:patch` (backwards compatible bug fixes)
 
-This will kick off the `release` workflow in Actions, which created a GitHub release with an automatically generated changelog populated by all PRs and commits in this version. The `publish` workflow is triggered as soon as the `release` workflow completes.
+Running any one of these will:
+
+1. Increment the version number in `package.json`
+2. Create a git tag with the new version number
+3. Push these changes to GitHub, which triggers the `release` workflow in GitHub Actions
+4. The `release` workflow then creates a new GitHub release with changelog automatically populated with all PRs and commits since the last version
+5. The `publish` workflow is then triggered when the `release` workflow completes. It compiles the package and pushes it up to `npm` / `gpr`
