@@ -2,11 +2,11 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
     allow:
-      - dependency-type: "production"
+      - dependency-type: 'production'
 #    reviewers:
 #      - "jessety"

@@ -2,12 +2,11 @@ name: publish
 
 on:
   workflow_run:
-    workflows: ["release"]
+    workflows: ['release']
     types:
       - completed
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
@@ -30,7 +29,7 @@ jobs:
           path: ./lib.tar.gz
           retention-days: 1
 
-# Comment out one of the following jobs to publish to only registry
+  # Comment out one of the following jobs to publish to only registry
 
   publish-npm:
     needs: build
