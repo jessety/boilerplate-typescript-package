@@ -27,12 +27,13 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf lib",
-    "format": "sort-package-json && prettier --write '**/*.ts' && eslint --fix .",
+    "format": "sort-package-json && prettier --write '**/*.{ts,js,json,yml,md}' && eslint --fix .",
     "lint": "eslint . && ec .",
     "test": "npm run build && jest",
     "release:patch": "npm version patch && git push --follow-tags",
     "release:minor": "npm version minor && git push --follow-tags",
-    "release:major": "npm version major && git push --follow-tags"
+    "release:major": "npm version major && git push --follow-tags",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@jessety/eslint-config": "^2.0.1",
@@ -40,7 +41,9 @@
     "@types/node": "^15.6.1",
     "editorconfig-checker": "^4.0.2",
     "eslint": "^7.20.0",
+    "husky": "^7.0.0",
     "jest": "^27.0.3",
+    "lint-staged": "^11.0.0",
     "prettier": "^2.3.0",
     "rimraf": "^3.0.2",
     "sort-package-json": "^1.49.0",
