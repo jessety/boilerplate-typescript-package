@@ -5,10 +5,6 @@
   },
   "overrides": [
     {
-      "files": ["**/*.{js,cjs,mjs}"],
-      "extends": "@jessety/eslint-config/javascript"
-    },
-    {
       "files": ["**/*.test.{ts,js,cjs,mjs}"],
       "env": { "jest": true },
       "rules": { "no-console": "warn" }
